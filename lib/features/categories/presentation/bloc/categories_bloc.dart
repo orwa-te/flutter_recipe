@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/get_categories.dart';
-import 'categories_event.dart';
-import 'categories_state.dart';
+import 'package:recipe/features/categories/domain/usecases/get_categories.dart';
+import 'package:recipe/features/categories/presentation/bloc/categories_event.dart';
+import 'package:recipe/features/categories/presentation/bloc/categories_state.dart';
+
+
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final GetCategories getCategories;

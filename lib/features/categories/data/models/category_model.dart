@@ -1,4 +1,5 @@
-import '../../domain/entities/category.dart';
+
+import 'package:recipe/features/categories/domain/entities/category.dart';
 
 class CategoryModel extends RecipeCategory {
   const CategoryModel({

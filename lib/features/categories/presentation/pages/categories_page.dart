@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../app/injection_container.dart';
-import '../bloc/categories_bloc.dart';
-import '../bloc/categories_event.dart';
-import '../bloc/categories_state.dart';
+import 'package:recipe/app/injection_container.dart';
+import 'package:recipe/features/categories/presentation/bloc/categories_bloc.dart';
+import 'package:recipe/features/categories/presentation/bloc/categories_event.dart';
+import 'package:recipe/features/categories/presentation/bloc/categories_state.dart';
+
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});

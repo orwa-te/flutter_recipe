@@ -1,5 +1,7 @@
-import '../entities/category.dart';
-import '../repositories/categories_repository.dart';
+
+
+import 'package:recipe/features/categories/domain/entities/category.dart';
+import 'package:recipe/features/categories/domain/repositories/categories_repository.dart';
 
 class GetCategories {
   final CategoriesRepository repository;

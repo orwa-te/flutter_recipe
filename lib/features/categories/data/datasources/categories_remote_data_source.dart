@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:recipe/core/network/api_constants.dart';
-import '../models/category_model.dart';
+import 'package:recipe/features/categories/data/models/category_model.dart';
 
 abstract class CategoriesRemoteDataSource {
   Future<List<CategoryModel>> getCategories();

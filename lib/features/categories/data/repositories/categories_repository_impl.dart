@@ -1,6 +1,8 @@
-import '../../domain/entities/category.dart';
-import '../../domain/repositories/categories_repository.dart';
-import '../datasources/categories_remote_data_source.dart';
+
+
+import 'package:recipe/features/categories/data/datasources/categories_remote_data_source.dart';
+import 'package:recipe/features/categories/domain/entities/category.dart';
+import 'package:recipe/features/categories/domain/repositories/categories_repository.dart';
 
 class CategoriesRepositoryImpl implements CategoriesRepository {
   final CategoriesRemoteDataSource remoteDataSource;
