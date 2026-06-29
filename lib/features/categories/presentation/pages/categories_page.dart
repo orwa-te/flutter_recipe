@@ -6,6 +6,9 @@ import 'package:recipe/features/categories/presentation/bloc/categories_event.da
 import 'package:recipe/features/categories/presentation/bloc/categories_state.dart';
 
 
+import 'package:recipe/features/meals/presentation/pages/meals_page.dart';
+
+
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
 
@@ -31,24 +34,34 @@ class CategoriesPage extends StatelessWidget {
                 itemCount: state.categories.length,
                 itemBuilder: (context, index) {
                   final category = state.categories[index];
-                  return Card(
-                    elevation: 4,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Image.network(
-                            category.thumbnail,
-                            fit: BoxFit.cover,
-                          ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MealsPage(categoryName: category.name),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            category.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                      );
+                    },
+                    child: Card(
+                      elevation: 4,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                              category.thumbnail,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              category.name,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

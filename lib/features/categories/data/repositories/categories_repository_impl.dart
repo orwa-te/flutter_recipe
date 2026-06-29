@@ -15,7 +15,6 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
       return await remoteDataSource.getCategories();
     } catch (e) {
       // In a real app, you'd map the exception to a Failure
-      // In a real app, you'd map the exception to a Failure
       rethrow;
     }
   }
