@@ -4,6 +4,7 @@ import 'package:recipe/app/injection_container.dart';
 import 'package:recipe/features/meals/presentation/bloc/meals_bloc.dart';
 import 'package:recipe/features/meals/presentation/bloc/meals_event.dart';
 import 'package:recipe/features/meals/presentation/bloc/meals_state.dart';
+import 'package:recipe/features/meal_detail/presentation/pages/meal_detail_page.dart';
 
 class MealsPage extends StatelessWidget {
   final String categoryName;
@@ -34,7 +35,15 @@ class MealsPage extends StatelessWidget {
                     ),
                     title: Text(meal.name),
                     onTap: () {
-                      // Navigate to meal details (to be implemented)
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MealDetailPage(
+                            mealId: meal.id,
+                            mealName: meal.name,
+                          ),
+                        ),
+                      );
                     },
                   );
                 },

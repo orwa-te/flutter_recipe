@@ -10,6 +10,11 @@ import 'package:recipe/features/meals/data/repositories/meals_repository_impl.da
 import 'package:recipe/features/meals/domain/repositories/meals_repository.dart';
 import 'package:recipe/features/meals/domain/usecases/get_meals_by_category.dart';
 import 'package:recipe/features/meals/presentation/bloc/meals_bloc.dart';
+import 'package:recipe/features/meal_detail/data/datasources/meal_detail_remote_data_source.dart';
+import 'package:recipe/features/meal_detail/data/repositories/meal_detail_repository_impl.dart';
+import 'package:recipe/features/meal_detail/domain/repositories/meal_detail_repository.dart';
+import 'package:recipe/features/meal_detail/domain/usecases/get_meal_detail.dart';
+import 'package:recipe/features/meal_detail/presentation/bloc/meal_detail_bloc.dart';
 
 
 final sl = GetIt.instance;
@@ -20,7 +25,7 @@ Future<void> init() async {
   sl.registerFactory(() => CategoriesBloc(getCategories: sl()));
 
   // Use cases
-  sl.registerLazySingleton(() => GetCategories(sl()));
+  sl.registerLazySingleton<GetCategories>(() => GetCategories(sl()));
 
   // Repository
   sl.registerLazySingleton<CategoriesRepository>(
@@ -47,6 +52,23 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<MealsRemoteDataSource>(
     () => MealsRemoteDataSourceImpl(dio: sl<DioClient>().dio),
+  );
+
+  // Features - Meal Detail
+  // Bloc
+  sl.registerFactory(() => MealDetailBloc(getMealDetail: sl()));
+
+  // Use cases
+  sl.registerLazySingleton(() => GetMealDetail(sl()));
+
+  // Repository
+  sl.registerLazySingleton<MealDetailRepository>(
+    () => MealDetailRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<MealDetailRemoteDataSource>(
+    () => MealDetailRemoteDataSourceImpl(dio: sl<DioClient>().dio),
   );
 
   // Core
