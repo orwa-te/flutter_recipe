@@ -15,3 +15,12 @@ class LoadMealsByCategory extends MealsEvent {
   @override
   List<Object> get props => [categoryName];
 }
+
+class SearchMealsEvent extends MealsEvent {
+  final String query;
+
+  const SearchMealsEvent(this.query);
+
+  @override
+  List<Object> get props => [query];
+}

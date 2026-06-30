@@ -9,6 +9,7 @@ import 'package:recipe/features/meals/data/datasources/meals_remote_data_source.
 import 'package:recipe/features/meals/data/repositories/meals_repository_impl.dart';
 import 'package:recipe/features/meals/domain/repositories/meals_repository.dart';
 import 'package:recipe/features/meals/domain/usecases/get_meals_by_category.dart';
+import 'package:recipe/features/meals/domain/usecases/search_meals.dart';
 import 'package:recipe/features/meals/presentation/bloc/meals_bloc.dart';
 import 'package:recipe/features/meal_detail/data/datasources/meal_detail_remote_data_source.dart';
 import 'package:recipe/features/meal_detail/data/repositories/meal_detail_repository_impl.dart';
@@ -39,10 +40,14 @@ Future<void> init() async {
 
   // Features - Meals
   // Bloc
-  sl.registerFactory(() => MealsBloc(getMealsByCategory: sl()));
+  sl.registerFactory(() => MealsBloc(
+        getMealsByCategory: sl(),
+        searchMeals: sl(),
+      ));
 
   // Use cases
   sl.registerLazySingleton(() => GetMealsByCategory(sl()));
+  sl.registerLazySingleton(() => SearchMeals(sl()));
 
   // Repository
   sl.registerLazySingleton<MealsRepository>(

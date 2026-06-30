@@ -4,17 +4,41 @@ import 'package:recipe/app/injection_container.dart';
 import 'package:recipe/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:recipe/features/categories/presentation/bloc/categories_event.dart';
 import 'package:recipe/features/categories/presentation/bloc/categories_state.dart';
+import 'package:recipe/features/meals/presentation/bloc/meals_bloc.dart';
 import 'package:recipe/features/meals/presentation/pages/meals_page.dart';
+import 'package:recipe/features/meals/presentation/widgets/meal_search_delegate.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<CategoriesBloc>()..add(LoadCategories()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => sl<CategoriesBloc>()..add(LoadCategories()),
+        ),
+        BlocProvider(
+          create: (_) => sl<MealsBloc>(),
+        ),
+      ],
       child: Scaffold(
-        appBar: AppBar(title: const Text('Recipe Categories')),
+        appBar: AppBar(
+          title: const Text('Recipe Categories'),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: MealSearchDelegate(context.read<MealsBloc>()),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: BlocBuilder<CategoriesBloc, CategoriesState>(
             builder: (context, state) {

@@ -15,4 +15,13 @@ class MealsRepositoryImpl implements MealsRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<List<Meal>> searchMeals(String query) async {
+    try {
+      return await remoteDataSource.searchMeals(query);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
