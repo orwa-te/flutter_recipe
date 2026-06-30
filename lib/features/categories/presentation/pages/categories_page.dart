@@ -7,6 +7,9 @@ import 'package:recipe/features/categories/presentation/bloc/categories_state.da
 import 'package:recipe/features/meals/presentation/bloc/meals_bloc.dart';
 import 'package:recipe/features/meals/presentation/pages/meals_page.dart';
 import 'package:recipe/features/meals/presentation/widgets/meal_search_delegate.dart';
+import 'package:recipe/features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:recipe/features/favorites/presentation/bloc/favorites_event.dart';
+import 'package:recipe/features/favorites/presentation/pages/favorites_page.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -21,11 +24,33 @@ class CategoriesPage extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<MealsBloc>(),
         ),
+        BlocProvider(
+          create: (_) => sl<FavoritesBloc>(),
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Recipe Categories'),
           actions: [
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.favorite),
+                  onPressed: () {
+                    final favoritesBloc = context.read<FavoritesBloc>();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                          value: favoritesBloc..add(LoadFavorites()),
+                          child: const FavoritesPage(),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
             Builder(
               builder: (context) => IconButton(
                 icon: const Icon(Icons.search),
