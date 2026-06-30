@@ -27,17 +27,18 @@ class MealDetailPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is MealDetailLoaded) {
               final meal = state.meal;
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.network(
-                      meal.thumbnail,
-                      width: double.infinity,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
+              return SafeArea(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network(
+                        meal.thumbnail,
+                        width: double.infinity,
+                        height: 250,
+                        fit: BoxFit.cover,
+                      ),
                     const SizedBox(height: 16),
                     Text(
                       meal.name,
@@ -65,7 +66,7 @@ class MealDetailPage extends StatelessWidget {
                     const SizedBox(height: 8),
                     ListView.builder(
                       shrinkWrap: true,
-                      // physics: const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: meal.ingredients.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -92,7 +93,7 @@ class MealDetailPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
+              ));
             } else if (state is MealDetailError) {
               return Center(child: Text(state.message));
             }

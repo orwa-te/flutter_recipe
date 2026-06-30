@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe/app/injection_container.dart';
@@ -17,41 +18,67 @@ class MealsPage extends StatelessWidget {
       create: (_) => sl<MealsBloc>()..add(LoadMealsByCategory(categoryName)),
       child: Scaffold(
         appBar: AppBar(title: Text('$categoryName Meals')),
-        body: BlocBuilder<MealsBloc, MealsState>(
-          builder: (context, state) {
-            if (state is MealsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is MealsLoaded) {
-              return ListView.builder(
-                itemCount: state.meals.length,
-                itemBuilder: (context, index) {
-                  final meal = state.meals[index];
-                  return ListTile(
-                    leading: Image.network(
-                      meal.thumbnail,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(meal.name),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MealDetailPage(
-                            mealId: meal.id,
-                            mealName: meal.name,
+        body: SafeArea(
+          child: BlocBuilder<MealsBloc, MealsState>(
+            builder: (context, state) {
+              if (state is MealsLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is MealsLoaded) {
+                return ListView.builder(
+                  itemCount: state.meals.length,
+                  itemBuilder: (context, index) {
+                    final meal = state.meals[index];
+                    return ListTile(
+                      leading: Image.network(
+                        meal.thumbnail,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                      title: Text(meal.name),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MealDetailPage(
+                              mealId: meal.id,
+                              mealName: meal.name,
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    );
+                  },
+                );
+              } else if (state is MealsError) {
+                return Center(child: Text(state.message));
+              }
+              return const Center(child: Text('No meals found.'));
+            },
+          ),
+        ),
+        floatingActionButton: BlocBuilder<MealsBloc, MealsState>(
+          builder: (context, state) {
+            if (state is MealsLoaded && state.meals.isNotEmpty) {
+              return FloatingActionButton(
+                tooltip: 'I\'m feeling lucky!',
+                onPressed: () {
+                  final random = Random();
+                  final meal = state.meals[random.nextInt(state.meals.length)];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MealDetailPage(
+                        mealId: meal.id,
+                        mealName: meal.name,
+                      ),
+                    ),
                   );
                 },
+                child: const Icon(Icons.casino),
               );
-            } else if (state is MealsError) {
-              return Center(child: Text(state.message));
             }
-            return const Center(child: Text('No meals found.'));
+            return const SizedBox.shrink();
           },
         ),
       ),
